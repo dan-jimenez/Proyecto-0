@@ -20,12 +20,13 @@ private:
     int windowsQuantity;
     ArrayList<ServiceWindow*> * serviceWindows;
     ArrayList<Service*> * services;
+    ArrayList <Area*>  * areas;
     int ticketsQuantity;
-    LinkedPriorityQueue<Ticket*> * queue;
+    LinkedPriorityQueue<Ticket*> *queue;
     ArrayList<Ticket*> * attentedTickets;
     int ticketsGiven; // tienen que ir desde el 0 al 99
-    int prefTicketsGiven; 
-    
+    int prefTicketsGiven;
+
     void generateServiceWindows(){
         for (int i = 0; i < windowsQuantity; i++){
             string windowCode = code + to_string(i);
@@ -33,7 +34,7 @@ private:
             serviceWindows->append(current);
         }
     }
-    
+
 
 public:
     Area(string description, char code, int windowsQuantity){
@@ -41,7 +42,7 @@ public:
         this->code = code;
         this->windowsQuantity = windowsQuantity;
         ticketsQuantity = 0;
-        ticketsGiven = 0; 
+        ticketsGiven = 0;
         serviceWindows = new ArrayList<ServiceWindow*>();
         services = new ArrayList<Service*>();
         queue = new LinkedPriorityQueue<Ticket*>(2);
@@ -57,8 +58,11 @@ public:
         ticketsGiven++;
         ticketsQuantity++;
     }
-    void addService(Service * service){
+    void addService(Service *service){
         services->append(service);
+    }
+    void addArea (Area *area){
+        areas->append(area);
     }
     bool attend(ServiceWindow * serviceWindow){ // Modificar
         serviceWindow->attend(queue->removeMin());
@@ -84,7 +88,7 @@ public:
     }
     double getAverageWatingTime(char codigoArea);
 
-    
+
 
 };
 

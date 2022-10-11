@@ -17,7 +17,7 @@ private:
     int back;
     int max;
     int size;
-    
+
     void emptyWarning(){
         if (size == 0)
             throw runtime_error("Queue is empty. ");
@@ -26,7 +26,7 @@ private:
 public:
     ArrayQueue(int max = DEFAULT_MAX_SIZE){
         if (max <= 0)
-            throw runtime_error("Invalid max size. "); 
+            throw runtime_error("Invalid max size. ");
         elements = new E[max];
         size = front = back = 0;
         this->max = max;

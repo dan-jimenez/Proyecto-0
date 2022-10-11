@@ -133,10 +133,10 @@ public:
             if(getElement() == element){
                 goToPos(currentPos);
                 return posi;
-            }  
+            }
             posi++;
         }
-        return -1;    
+        return -1;
     }
     bool contains(E element){
         emptyList();
@@ -146,7 +146,7 @@ public:
             if(getElement() == element){
                 goToPos(pos);
                 return true;
-            }  
+            }
         }
         return false;
     }
@@ -159,7 +159,7 @@ public:
         }
         L->goToPos(i);
     }
-    
+
     bool equals(List<E> *L){
         //Comprueba si dos listas son iguales tanto en forma como en contenido
         // Probar metodo
@@ -174,12 +174,12 @@ public:
                 L->goToPos(i);
                 return false;
             }
-            next();   
+            next();
         }
         goToPos(currentPos);
         L->goToPos(i);
         return true;
-    } 
+    }
 };
 
 #endif // ARRAYLIST_H

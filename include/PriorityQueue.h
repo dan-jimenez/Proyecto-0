@@ -18,4 +18,4 @@ public:
     virtual void print() =0;
 };
 
-#endif // PRIORITYQUEUE_H
+#endif // PRIORITY

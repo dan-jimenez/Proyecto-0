@@ -1,6 +1,7 @@
 #ifndef SERVICEWINDOW_H
 #define SERVICEWINDOW_H
 #include "Area.h"
+#include "Ticket.h"
 
 class ServiceWindow{
 private:

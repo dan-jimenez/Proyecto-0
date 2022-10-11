@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include "PriorityQueue.h"
 #include "LinkedQueue.h"
+#include "Queue.h"
+
 
 using std::runtime_error;
 using std::cout;

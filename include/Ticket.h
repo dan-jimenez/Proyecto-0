@@ -5,6 +5,8 @@
 #include <ctime>
 #include <string>
 
+#include "Service.h"
+
 using std::ctime;
 using std::chrono::system_clock;
 using std::string;
@@ -16,7 +18,7 @@ private:
     bool preferential;
     time_t comingTime;
     time_t endingTime;
-    
+
     void operator=(const Ticket &other) {}
     Ticket(const Ticket &other) {}
 
@@ -36,4 +38,3 @@ public:
 };
 
 #endif //TIQUETE_H
-

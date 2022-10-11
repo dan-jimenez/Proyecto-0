@@ -13,6 +13,7 @@ using std::endl;
 template <typename E>
 class LinkedQueue : public Queue<E> {
 private:
+
     Node<E> *front;
     Node<E> *back;
     int size;

@@ -11,9 +11,9 @@ class Controlador{
 private:
     ArrayList<Area*> * areas;
     ArrayList<Service*> * services;
-    
 
-public: 
+
+public:
     Controlador(){
         areas = new ArrayList<Area*>();
         services = new ArrayList<Service*>();
