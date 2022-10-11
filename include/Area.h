@@ -64,6 +64,15 @@ public:
     void addArea (Area *area){
         areas->append(area);
     }
+
+    bool areaExist(char code){
+        char ar;
+        for (int i = 0; i < areas->getSize(); i++){
+            if (ar == code)
+                return true;
+        }
+        return false;
+    }
     bool attend(ServiceWindow * serviceWindow){ // Modificar
         serviceWindow->attend(queue->removeMin());
         return serviceWindow->getLastTicket();
