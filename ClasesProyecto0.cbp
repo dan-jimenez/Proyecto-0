@@ -34,22 +34,20 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Main.cpp" />
-		<Unit filename="include/.DS_Store" />
 		<Unit filename="include/Area.h" />
 		<Unit filename="include/ArrayList.h" />
+		<Unit filename="include/ArrayQueue.h" />
 		<Unit filename="include/Controlador.h" />
 		<Unit filename="include/LinkedPriorityQueue.h" />
 		<Unit filename="include/LinkedQueue.h" />
 		<Unit filename="include/List.h" />
-		<Unit filename="include/Main" />
-		<Unit filename="include/ModeloMVC.mdj" />
 		<Unit filename="include/Node.h" />
 		<Unit filename="include/PriorityQueue.h" />
-		<Unit filename="include/Proyecto0.docx" />
-		<Unit filename="include/Proyecto_0_Control_Colas.pdf" />
-		<Unit filename="include/Servicio.h" />
-		<Unit filename="include/Ventanilla.h" />
+		<Unit filename="include/Queue.h" />
+		<Unit filename="include/Service.h" />
+		<Unit filename="include/ServiceWindow.h" />
+		<Unit filename="include/Ticket.h" />
+		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
