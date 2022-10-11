@@ -5,17 +5,17 @@
 
 using std::string;
 
-class Servicio{
+class Service{
 private:
     string nombre;
     string code;
-    int clientAttended;
+    int ticketsGiven;
 
 public:
-    Servicio(string nombre, string code){
+    Service(string nombre, string code){
         this->nombre = nombre;
         this->code = code;
-        this->clientAttended = 0;
+        this->ticketsGiven = 0;
     }
 
     string getNombre(){
@@ -25,10 +25,10 @@ public:
         return this->code;
     }
     int getNumCliente(){
-        return this->clientAttended;
+        return this->ticketsGiven;
     }
     void count(){
-        clientAttended++;
+        ticketsGiven++;
     }
     
 

@@ -21,7 +21,7 @@ private:
     Ticket(const Ticket &other) {}
 
 public:
-    Ticket(string code, bool preferential){
+    Ticket(string code, bool preferential, Service * service){
         this->code = code;
         comingTime = system_clock::to_time_t(system_clock::now());
         this->preferential = preferential;

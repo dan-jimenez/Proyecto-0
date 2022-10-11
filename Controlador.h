@@ -9,24 +9,28 @@ using std::string;
 
 class Controlador{
 private:
-    ArrayList<Area> * areas;
-    ArrayList<Servicio> * services;
+    ArrayList<Area*> * areas;
+    ArrayList<Service*> * services;
+    
 
 public: 
     Controlador(){
-        areas = new ArrayList<Area>();
-        services = new ArrayList<Servicio>();
+        areas = new ArrayList<Area*>();
+        services = new ArrayList<Service*>();
     }
-    bool agregarServicio();
-    bool agregarArea();
-    bool existeArea(char code);
-    bool atender();
-    void verColas();
-    double getTiempoPromedioEspera(char codigoArea);
-    int getCantidadTiquetes(char codigoArea);
-    int getCantidadTiquetesAtendidos(string codigoVentanilla);
-    int getCantidadTiquetesDispensados(int codigoServicio);
-    int getCantidadTiquetesPreferenciales();
+    bool generateTicket();
+    bool addService();
+    bool addArea();
+    bool areaExist(char code);
+    bool attend();
+    void printQueues();
+    double getAverageWatingTime(char codigoArea);
+    int getTicketQuantity(char codigoArea);
+    int getAttentedTicketsQuantity(string codigoVentanilla);
+    int getQuantityTicketsGiven(int codigoServicio);
+    int getQuantityPrefTickets(){
+        return 1;
+    }
 };
 
 

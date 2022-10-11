@@ -19,10 +19,12 @@ private:
     char code;
     int windowsQuantity;
     ArrayList<ServiceWindow*> * serviceWindows;
-    ArrayList<Servicio*> * services;
+    ArrayList<Service*> * services;
     int ticketsQuantity;
     LinkedPriorityQueue<Ticket*> * queue;
-    int clientAttended; // tienen que ir desde el 0 al 99
+    ArrayList<Ticket*> * attentedTickets;
+    int ticketsGiven; // tienen que ir desde el 0 al 99
+    int prefTicketsGiven; 
     
     void generateServiceWindows(){
         for (int i = 0; i < windowsQuantity; i++){
@@ -39,23 +41,31 @@ public:
         this->code = code;
         this->windowsQuantity = windowsQuantity;
         ticketsQuantity = 0;
+        ticketsGiven = 0; 
         serviceWindows = new ArrayList<ServiceWindow*>();
-        services = new ArrayList<Servicio*>();
-        queue = new LinkedPriorityQueue<Ticket*>(1);
+        services = new ArrayList<Service*>();
+        queue = new LinkedPriorityQueue<Ticket*>(2);
     }
 
-    void generateClient(bool pref){ //este genera el code de la ficha apartir del servicio y el numero de clientes.
-        string clientCode = code + to_string(clientAttended);
-        Ticket * client = new Ticket(clientCode, pref);
+    void generateClient(bool pref, Service * service){ //este genera el code de la ficha apartir del servicio y el numero de clientes.
+        string clientCode = code + to_string(ticketsGiven);
+        Ticket * client = new Ticket(clientCode, pref, service);
         if(pref)
             queue->insert(client, 0);
         else
             queue->insert(client, 1);
-        clientAttended++;
+        ticketsGiven++;
         ticketsQuantity++;
     }
-    void addService(Servicio * service){
+    void addService(Service * service){
         services->append(service);
+    }
+    bool attend(ServiceWindow * serviceWindow){ // Modificar
+        serviceWindow->attend(queue->removeMin());
+        return serviceWindow->getLastTicket();
+    }
+    Service * removeService(string code){
+        return nullptr; //Falta implementacion
     }
     string getDescription(){
         return description;
@@ -67,11 +77,12 @@ public:
         return windowsQuantity;
     }
     int getClientAttended(){
-        return clientAttended;
+        return ticketsGiven;
     }
     int getTicketsQuantity(){
         return ticketsQuantity;
     }
+    double getAverageWatingTime(char codigoArea);
 
     
 
