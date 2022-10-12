@@ -74,10 +74,11 @@ public:
         }
         return false;
     }
-    bool attend(ServiceWindow * serviceWindow){ // Modificar
+    /* Ticket attend(ServiceWindow * serviceWindow){ // Modificar
         serviceWindow->attend(queue->removeMin());
         return serviceWindow->getLastTicket();
-    }
+    }*/
+
     Service * removeService(string code){
         return nullptr; //Falta implementacion
     }
@@ -96,8 +97,21 @@ public:
     int getTicketsQuantity(){
         return ticketsQuantity;
     }
-    double getAverageWatingTime(char codigoArea);
-
+   /* double getAverageWatingTime(char codigoArea){
+        double totalAverage=0;
+        for (int i=0; i>ticketsQuantity; i++){
+            double sum = attentedTickets[i];
+            sum.getDuration();
+            totalAverage += sum;
+        return totalAverage/ticketsGiven;
+        }
+    }*/
+    /*void printQueues(){
+        for (int i = 0; i < ticketsGiven; i++) {
+            cout << i << ": ";
+            queue[i].print();
+        }
+    }*/
 
 
 };
