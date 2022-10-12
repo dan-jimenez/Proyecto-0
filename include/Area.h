@@ -66,9 +66,10 @@ public:
     }
 
     bool areaExist(char code){
-        char ar;
-        for (int i = 0; i < areas->getSize(); i++){
-            if (ar == code)
+        areas->goToStart();
+        while (!areas->atEnd()) {
+            Area *a = areas->getElement();
+            if (a->getCode() == code)
                 return true;
         }
         return false;
