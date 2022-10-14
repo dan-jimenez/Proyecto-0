@@ -74,7 +74,8 @@ public:
         }
         return false;
     }
-    /* Ticket attend(ServiceWindow * serviceWindow){ // Modificar
+    /* 
+    Ticket attend(ServiceWindow * serviceWindow){ // Modificar
         serviceWindow->attend(queue->removeMin());
         return serviceWindow->getLastTicket();
     }*/
