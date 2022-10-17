@@ -15,12 +15,52 @@ public:
     Controller(){
         areas = new ArrayList<Area*>();
     }
-    bool generateTicket();
-    bool addService();
-    bool addArea();
-    bool areaExist(char code);
-    bool attend();
-    
+    bool generateTicket(char areaCode, bool pref, string serviceCode){
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            if(areas->getElement()->getCode() == areaCode){
+                return areas->getElement()->generateClient(pref, serviceCode);
+            }
+        }
+        return false;
+    }
+    bool addService(char areaCode, string serviceCode, string nombre){
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            if(areas->getElement()->getCode() == areaCode){
+                Service * current = new Service(nombre, serviceCode);
+                areas->getElement()->addService(current);
+                return true; 
+            }
+        }
+        return false;
+    }
+    bool addArea(int windowsQuantity, char code, string description){
+        Area * current = new Area(description, code, windowsQuantity);
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            if(areas->getElement()->getCode() == code){
+                return false; 
+            }
+        }
+        areas->append(current);
+        return true; 
+    }
+    bool areaExist(char code){
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            if(areas->getElement()->getCode() == code){
+                return true; 
+            }
+        }
+        return false;
+    }
+    bool attend(char areaCode, string serviceWindowCode){
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            if(areas->getElement()->getCode() == areaCode){
+                areas->getElement()->attend(serviceWindowCode);
+                return true;
+            }
+        }
+        return false;
+    }
+
     void printQueues(){
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             cout << "Area "<< areas->getElement()->getCode() << ": " << endl;
@@ -30,17 +70,20 @@ public:
     double getAverageWatingTime(char codigoArea){
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == codigoArea)
-                areas->getElement()->getAverageWatingTime();
+                return areas->getElement()->getAverageWatingTime();
+        return -1;
     }
     int getTicketQuantity(char codigoArea){
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == codigoArea)
-                areas->getElement()->getTicketsGiven();
+                return areas->getElement()->getTicketsGiven();
+        return -1;
     }
     int getAttentedTicketsQuantity(char codeArea, string codigoVentanilla){
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == codeArea)
-                areas->getElement()->getTicketServiceWindow(codigoVentanilla);
+                return areas->getElement()->getTicketServiceWindow(codigoVentanilla);
+        return -1;
     }
     int getQuantityTicketsGiven(char areaCode, string serviceCode){
         for (areas->goToStart(); !areas->atEnd(); areas->next())

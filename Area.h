@@ -84,10 +84,17 @@ public:
         return false;
     }
     
-    Ticket * attend(ServiceWindow * serviceWindow){
-        serviceWindow->attend(queue->removeMin());
-        attentedTickets->append(serviceWindow->getLastTicket());
-        return serviceWindow->getLastTicket();
+    bool attend(string serviceWindowCode){
+        ServiceWindow * current;
+        for(serviceWindows->goToStart(); !serviceWindows->atEnd(); serviceWindows->next())
+            if(serviceWindows->getElement()->getCode() == serviceWindowCode)
+                current = serviceWindows->getElement();
+        if(current != nullptr){
+            current->attend(queue->removeMin());
+            attentedTickets->append(current->getLastTicket());
+            return true;
+        }
+        return false;
     }
 
     Service * removeService(string code){
@@ -128,7 +135,7 @@ public:
         return ticketsGiven;
     }
     int getTicketsGiven(string serviceCode){
-        for(int i = 0; i< services->getSize(); i++)
+        for(services->goToStart(); !services->atEnd(); services->next())
             if(services->getElement()->getCodigo() == serviceCode)
                 return services->getElement()->getTicketsGiven();
         return -1;
