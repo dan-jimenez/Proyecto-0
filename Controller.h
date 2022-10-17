@@ -33,6 +33,14 @@ public:
         }
         return false;
     }
+    bool deleteService(char areaCode, string serviceCode){
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            if(areas->getElement()->getCode() == areaCode){
+                return areas->getElement()->removeService(serviceCode); 
+            }
+        }
+        return false;
+    }
     bool addArea(int windowsQuantity, char code, string description){
         Area * current = new Area(description, code, windowsQuantity);
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
@@ -42,6 +50,15 @@ public:
         }
         areas->append(current);
         return true; 
+    }
+    bool deleteArea(char code){
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            if(areas->getElement()->getCode() == code){
+                areas->remove();
+                return true;
+            }
+        }
+        return false;
     }
     bool areaExist(char code){
         for(areas->goToStart(); !areas->atEnd(); areas->next()){

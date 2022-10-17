@@ -144,6 +144,15 @@ public:
         return prefTicketsGiven;
     }
 
+    bool deleteService(string serviceCode){
+        for(services->goToStart(); !services->atEnd(); services->next())
+            if(services->getElement()->getCodigo() == serviceCode){
+                services->remove();
+                return true;
+            }
+        return false;
+    }
+
 
 };
 
