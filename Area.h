@@ -21,11 +21,10 @@ private:
     ArrayList<ServiceWindow*> * serviceWindows;
     ArrayList<Service*> * services;
     ArrayList <Area*>  * areas;
-    int ticketsQuantity;
     LinkedPriorityQueue<Ticket*> *queue;
     ArrayList<Ticket*> * attentedTickets;
     int ticketsGiven; // tienen que ir desde el 0 al 99
-    int prefTicketsGiven;
+    int prefTicketsGiven; 
 
     void generateServiceWindows(){
         for (int i = 0; i < windowsQuantity; i++){
@@ -41,22 +40,32 @@ public:
         this->description = description;
         this->code = code;
         this->windowsQuantity = windowsQuantity;
-        ticketsQuantity = 0;
         ticketsGiven = 0;
         serviceWindows = new ArrayList<ServiceWindow*>();
         services = new ArrayList<Service*>();
         queue = new LinkedPriorityQueue<Ticket*>(2);
     }
 
-    void generateClient(bool pref, Service * service){ //este genera el code de la ficha apartir del servicio y el numero de clientes.
+    bool generateClient(bool pref, string serviceCode){ //este genera el code de la ficha apartir del servicio y el numero de clientes.
         string clientCode = code + to_string(ticketsGiven);
-        Ticket * client = new Ticket(clientCode, pref, service);
-        if(pref)
+        Service * actual;
+        for (int i = 0; i < services->getSize(); i++)
+            if(serviceCode == services->getElement()->getCodigo())
+                actual = services->getElement();
+        if(actual == nullptr){
+            return false;
+        }
+        Ticket * client = new Ticket(clientCode, pref, actual);
+        actual->count();
+        if(pref){
             queue->insert(client, 0);
+            prefTicketsGiven++;
+        }
         else
             queue->insert(client, 1);
         ticketsGiven++;
-        ticketsQuantity++;
+        return true;
+        
     }
     void addService(Service *service){
         services->append(service);
@@ -96,15 +105,10 @@ public:
     int getClientAttended(){
         return ticketsGiven;
     }
-    int getTicketsQuantity(){
-        return ticketsQuantity;
-    }
    double getAverageWatingTime(){
         double totalAverage = 0;
-        for (int i=0; i>ticketsQuantity; i++){
-            attentedTickets->goToPos(i);
+        for (attentedTickets->goToStart(); !attentedTickets->atEnd(); attentedTickets->next()){
             totalAverage = attentedTickets->getElement()->getDuration();
-            
         }
         return totalAverage/ticketsGiven;
         
@@ -119,6 +123,18 @@ public:
     }
     void printQueues(){
         queue->print();
+    }
+    int getTicketsGiven(){
+        return ticketsGiven;
+    }
+    int getTicketsGiven(string serviceCode){
+        for(int i = 0; i< services->getSize(); i++)
+            if(services->getElement()->getCodigo() == serviceCode)
+                return services->getElement()->getTicketsGiven();
+        return -1;
+    }
+    int getPrefTicketsGiven(){
+        return prefTicketsGiven;
     }
 
 
