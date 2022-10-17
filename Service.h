@@ -30,6 +30,9 @@ public:
     void count(){
         ticketsGiven++;
     }
+    int getTicketsGiven(){
+        return ticketsGiven;
+    }
 
 
 };

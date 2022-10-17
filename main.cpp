@@ -1,36 +1,36 @@
 #include <iostream>
 #include "Area.h"
-#include "Controlador.h"
+#include "Controller.h"
 using namespace std;
-//El código del menú se hace con una estructura switch que recibe números enteros
+//El cï¿½digo del menï¿½ se hace con una estructura switch que recibe nï¿½meros enteros
 //como entrada para poder realizar las operaciones del programa
 
 
 int main (){
-
+    Controller * controller = new Controller();
 //    setlocale(LC_ALL, "spanish");
     // se declaran las variables
     int opcion;
     bool repetir = true;
     //se imprime la bienvenida del programa
     cout << " ____________________________________________________________ "<< endl;
-    cout << "|                        ¡Bienvenido!                        |"<< endl;
+    cout << "|                        Bienvenido!                        |"<< endl;
     cout << "|____________________________________________________________| "<< endl;
-    cout << "|  En nuestra institución bancaria se le ofrecen distintos   |" << endl;
-    cout << "|  servicios al cliente, a continuación se le desplegara el  |" << endl;
-    cout << "|  menú principal donde prodrá elegir cual servicio desea    |" << endl;
+    cout << "|  En nuestra institucion bancaria se le ofrecen distintos   |" << endl;
+    cout << "|  servicios al cliente, a continuacion se le desplegara el  |" << endl;
+    cout << "|  menu principal donde prodra elegir cual servicio desea    |" << endl;
     cout << "|  adquirir.                                                 |" << endl;
     cout << "|____________________________________________________________|" << endl;
    // system("cls");
         do {
-            //opciones del menú
-            cout << "\nMenú Principal de Opciones\n" << endl;
+            //opciones del menï¿½
+            cout << "\nMenu Principal de Opciones\n" << endl;
             cout << "1. Solicitar tiquete " << endl;
             cout << "2. Atender" << endl;
-            cout << "3. Area de administración " << endl;
-            cout << "4. Estadísticas del sistema" << endl;
+            cout << "3. Area de administracion " << endl;
+            cout << "4. Estadasticas del sistema" << endl;
             cout << "5. Ver el estado de la colas " << endl;
-            cout << "6. Regresar al menú principal" << endl;
+            cout << "6. Regresar al menu principal" << endl;
             cout << "0. SALIR" << endl;
             cout << "\nIngrese una opcion: ";
             cin >> opcion;
@@ -46,15 +46,15 @@ int main (){
                     break;
 
                 case 3:
-                    //submenús
+                    //submenï¿½s
 
-                    cout << "\nMenú área de administración" << endl;
-                    cout << "1. Agregar área " << endl;
-                    cout << "2. Eliminar área " << endl;
+                    cout << "\nMenu Area de administracion" << endl;
+                    cout << "1. Agregar Area " << endl;
+                    cout << "2. Eliminar Area " << endl;
                     cout << "3. Agregar servicio " << endl;
                     cout << "4. Eliminar servicio" << endl;
                     cout << "5. Reordenar servicios " << endl;
-                    cout << "6. Volver al menú principal " << endl;
+                    cout << "6. Volver al menu principal " << endl;
                     cout << "\nIngrese una opcion: ";
                     cin >> opcion;
 
@@ -76,15 +76,15 @@ int main (){
 
 
                 case 4:
-                    //submenús
+                    //submenï¿½s
 
-                    cout << "\nMenú estadísticas del sistema" << endl;
-                    cout << "1. Tiempo promedio de espera por área  " << endl;
-                    cout << "2. Total de tiquetes dispensados por área  " << endl;
+                    cout << "\nMenï¿½ estadï¿½sticas del sistema" << endl;
+                    cout << "1. Tiempo promedio de espera por ï¿½rea  " << endl;
+                    cout << "2. Total de tiquetes dispensados por ï¿½rea  " << endl;
                     cout << "3. Total de tiquetes atendidos por ventanilla  " << endl;
                     cout << "4. Total de tiquetes dispensados por servicio " << endl;
                     cout << "5. Total de tiquetes preferenciales dispensados en todo el sistema " << endl;
-                    cout << "6. Volver al menú principal " << endl;
+                    cout << "6. Volver al menï¿½ principal " << endl;
                     cout << "\nIngrese una opcion: ";
                     cin >> opcion;
                     if (opcion==1)
@@ -109,7 +109,7 @@ int main (){
                     repetir = false;
                     break;
                 default:
-                    cout << "opción fuera de rango, por favor intente de nuevo" << endl;
+                    cout << "opciï¿½n fuera de rango, por favor intente de nuevo" << endl;
 
                 }
         } while (repetir);

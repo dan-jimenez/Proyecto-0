@@ -24,6 +24,9 @@ public:
     int getTicketsQuantity(){
         return ticketsQuantity;
     }
+    string getCode(){
+        return code;
+    }
 };
 
 #endif // SERVICEWINDOW_H
