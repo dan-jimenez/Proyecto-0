@@ -3,49 +3,27 @@
 #include "Controller.h"
 #include "Service.h"
 using namespace std;
-//El cÃ¯Â¿Â½digo del menÃ¯Â¿Â½ se hace con una estructura switch que recibe nÃ¯Â¿Â½meros enteros
+//El cÃƒÂ¯Ã‚Â¿Ã‚Â½digo del menÃƒÂ¯Ã‚Â¿Ã‚Â½ se hace con una estructura switch que recibe nÃƒÂ¯Ã‚Â¿Ã‚Â½meros enteros
 //como entrada para poder realizar las operaciones del programa
 
 
 int main (){
       Controller * controller = new Controller();
+      controller ->addArea("Cajas", 'C', 4);
+      controller ->addArea("Empresas", 'E', 2);
+      controller ->addArea("Servicio al cliente", 'S', 3);
+      controller ->addService('S', "C", "Cobros de cliente");
+      controller ->addService('S', "A", "Apertura cuentas");
+      controller ->addService('S', "R", "Retiro de tarjetas");
+      controller ->addService('C', "C", "Cobros de cliente");
+      controller ->addService('C', "P", "Pagos de servicio");
+      controller ->addService('E', "PT", "Prestamos");
+      controller ->addService('E', "AR", "Arreglos de pago");
+
 //    setlocale(LC_ALL, "spanish");
     // se declaran las variables
     int opcion;
     bool repetir = true;
-    string desc;
-    int wind;
-    char codeA;
-    string servic;
-    string serviceCode;
-    int fin = 1;
-    cout << "Por favor agregue las áreas" << endl;
-    while (fin > 0){
-        cout << "Por favor ingrese la describción del area: ";
-        cin >> desc;
-        cout << "Por favor ingrese el número de ventanillas: ";
-        cin >> wind;
-        cout << "Por favor ingrese el código del area: ";
-        cin >> codeA;
-        controller->addArea(desc, codeA, wind);
-        cout << "Se ha agregado el area correctamente... " << endl;
-        cout << "Desea agregar más? Si = 1, No = 0: ";
-        cin >> fin;
-    }
-    cout << "Por favor agregue los servicios" << endl;
-     fin = 1;
-     while (fin > 0){
-        cout << "Por favor ingrese el código del Ã¡rea: ";
-        cin >> codeA;;
-        cout <<" Por favor ingrese la descripción del servicio: ";
-        cin >> servic;
-        cout << "Por favor ingrese el código del servicio: ";
-        cin >> serviceCode;
-        controller->addService(codeA,serviceCode, servic);
-        cout << "Servicio agregado correctamente!" << endl;
-        cout << "Desea agregar más? Si = 1, No = 0: ";
-        cin >> fin;
-    }
 
     //se imprime la bienvenida del programa
     cout << " ____________________________________________________________ "<< endl;
@@ -58,7 +36,7 @@ int main (){
     cout << "|____________________________________________________________|" << endl;
    // system("cls");
         do {
-            //opciones del menÃº
+            //opciones del menÃƒÂº
 
             cout << "\nMenu Principal de Opciones\n" << endl;
             cout << "1. Solicitar tiquete " << endl;
@@ -78,30 +56,54 @@ int main (){
                 switch (opcion) {
                 case 1:
                     //Caso para solicitar un tiquete
+                    char codigo;
+                    string codigoServicio;
                     cout << "Por favor escoja una de las opciones: " << endl;
                     cout << "1. Si es un cliente no-preferencial: " << endl;
                     cout << "2. Si usted es un cliente preferencial" << endl;
                     cin >> opcion;
                     if (opcion == 1){
-                        
+                        controller->print();
+                        cout << "Por favor digite  el código de área: ";
+                        cin>> codigo;
+                        cout << "Por favor digite el código de servicio: ";
+                        cin >> codigoServicio;
+                        try{
+                            controller->generateTicket(codigo, false, codigoServicio);
+                        }catch(const std::exception& e){
+                            std::cerr << e.what() << '\n';
+                    }
                     break;
                     }
                     if (opcion == 2){
-
-                    break;
+                        controller->print();
+                        cout << "Por favor digite  el código de área: ";
+                        cin>> codigo;
+                        cout << "Por favor digite el código de servicio: ";
+                        cin >> codigoServicio;
+                        try{
+                            controller->generateTicket(codigo, true, codigoServicio);
+                        }catch(const std::exception& e){
+                            std::cerr << e.what() << '\n';
                     }
+                    break;
+                }
 
                 case 2: //Caso para atender
                     cout <<"Atendiendo cliente";
                     cout << "Por favor digite el area en la que se encuentra el cliente: ";
                     cin >> areaCode;
-                    cout << "Por favor digite el servicio en donde estÃ¡ el cliente: ";
+                    cout << "Por favor digite el servicio en donde estÃƒÂ¡ el cliente: ";
                     cin >> serviceCode;
-                    controller->attend(areaCode, serviceCode);
+                    try{
+                        controller->attend(areaCode, serviceCode);
+                    }catch(const std::exception& e){
+                        std::cerr << e.what() << '\n';
+                    }
                     break;
 
                 case 3:
-                    //submenÃ¯Â¿Â½s
+                    //submenÃƒÂ¯Ã‚Â¿Ã‚Â½s
 
                     cout << "\nMenu Area de administracion" << endl;
                     cout << "1. Agregar Area " << endl;
@@ -117,11 +119,11 @@ int main (){
                             string desc;
                             int wind;
 
-                            cout << "Por favor ingrese la describciÃ³n del Ã¡rea: ";
+                            cout << "Por favor ingrese la describciÃƒÂ³n del ÃƒÂ¡rea: ";
                             cin >> desc;
                             cout << "Por favor ingrese el numero de ventanillas: ";
                             cin >> wind;
-                            cout << "Por favor ingrese el codigo del Ã¡rea: ";
+                            cout << "Por favor ingrese el codigo del ÃƒÂ¡rea: ";
                             cin >> areaCode;
                             try{
                                 controller->addArea(desc, areaCode, wind);
@@ -146,7 +148,7 @@ int main (){
 
                         if (opcion==3){
                             string servic;
-                            cout << "Por favor ingrese el codigo del Ã¡rea: ";
+                            cout << "Por favor ingrese el codigo del ÃƒÂ¡rea: ";
                             cin >> areaCode;
                             cout <<" Por favor ingrese la descripcion del servicio: ";
                             cin >> servic;
@@ -164,9 +166,9 @@ int main (){
                         }
 
                         if (opcion==4){
-                            cout << "Por favor digite el código del Area donde se encuentra el servicio: ";
+                            cout << "Por favor digite el cÃ³digo del Area donde se encuentra el servicio: ";
                             cin >> areaCode;
-                            cout << "Por favor digite el cóigo del servicio que desea eliminar: ";
+                            cout << "Por favor digite el cÃ³igo del servicio que desea eliminar: ";
                             cin >> serviceCode;
                             try{
                                 controller->deleteService(areaCode, serviceCode);
@@ -188,15 +190,15 @@ int main (){
 
 
                 case 4:
-                    //submenÃ¯Â¿Â½s
+                    //submenÃƒÂ¯Ã‚Â¿Ã‚Â½s
 
-                    cout << "\nMenÃº estadisticas del sistema" << endl;
+                    cout << "\nMenÃƒÂº estadisticas del sistema" << endl;
                     cout << "1. Tiempo promedio de espera por area" << endl;
                     cout << "2. Total de tiquetes dispensados por area" << endl;
                     cout << "3. Total de tiquetes atendidos por ventanilla" << endl;
                     cout << "4. Total de tiquetes dispensados por servicio" << endl;
                     cout << "5. Total de tiquetes preferenciales dispensados en todo el sistema" << endl;
-                    cout << "6. Volver al menÃº principal " << endl;
+                    cout << "6. Volver al menÃƒÂº principal " << endl;
                     cout << "\nIngrese una opcion: ";
                     cin >> opcion;
                     if (opcion==1){
@@ -226,7 +228,7 @@ int main (){
 
                     if (opcion==3){
                         string windowCode;
-                        cout << "Por favor digite el codigo del Ã¡rea: ";
+                        cout << "Por favor digite el codigo del ÃƒÂ¡rea: ";
                         cin >> areaCode;
                         cout << "Digite el codigo de la ventanilla: ";
                         cin >> windowCode;
@@ -272,7 +274,7 @@ int main (){
                     repetir = false;
                     break;
                 default:
-                    cout << "opciÃ³n fuera de rango, por favor intente de nuevo" << endl;
+                    cout << "opciÃƒÂ³n fuera de rango, por favor intente de nuevo" << endl;
 
                 }
         } while (repetir);
