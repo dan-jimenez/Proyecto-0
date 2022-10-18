@@ -145,7 +145,7 @@ public:
         string result = "Areas: \n";
         int counter = 0;
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
-            result += to_string(counter) + areas->getElement()->print(); 
+            result += to_string(counter) + ". " + areas->getElement()->print(); 
             counter++;
         }
         return result; 

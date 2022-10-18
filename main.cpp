@@ -55,6 +55,7 @@ int main (){
                 //comienza a ejecutar las operaciones del programa
                 switch (opcion) {
                 case 1:
+                {
                     //Caso para solicitar un tiquete
                     char codigo;
                     string codigoServicio;
@@ -63,7 +64,7 @@ int main (){
                     cout << "2. Si usted es un cliente preferencial" << endl;
                     cin >> opcion;
                     if (opcion == 1){
-                        controller->print();
+                        cout << controller->print() << endl;
                         cout << "Por favor digite  el código de área: ";
                         cin>> codigo;
                         cout << "Por favor digite el código de servicio: ";
@@ -72,11 +73,10 @@ int main (){
                             controller->generateTicket(codigo, false, codigoServicio);
                         }catch(const std::exception& e){
                             std::cerr << e.what() << '\n';
-                    }
-                    break;
+                        }
                     }
                     if (opcion == 2){
-                        controller->print();
+                        cout << controller->print() << endl;
                         cout << "Por favor digite  el código de área: ";
                         cin>> codigo;
                         cout << "Por favor digite el código de servicio: ";
@@ -85,6 +85,7 @@ int main (){
                             controller->generateTicket(codigo, true, codigoServicio);
                         }catch(const std::exception& e){
                             std::cerr << e.what() << '\n';
+                        }
                     }
                     break;
                 }

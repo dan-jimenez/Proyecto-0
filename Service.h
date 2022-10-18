@@ -34,7 +34,7 @@ public:
         return ticketsGiven;
     }
     string print(){
-        string result = nombre + "   ----------------------------------------  "+ code + ". \n";
+        string result = nombre + "   --------------------------- Codigo: "+ code + ". \n";
         return result;
     }
 

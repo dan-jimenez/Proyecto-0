@@ -53,6 +53,7 @@ public:
         this->windowsQuantity = windowsQuantity;
         ticketsGiven = 0;
         serviceWindows = new ArrayList<ServiceWindow*>();
+        generateServiceWindows();
         services = new ArrayList<Service*>();
         queue = new LinkedPriorityQueue<Ticket*>(2);
     }
@@ -61,7 +62,7 @@ public:
         string clientCode = code + to_string(ticketsGiven);
         Service * actual;
         servicesVerification();
-        for (int i = 0; i < services->getSize(); i++)
+        for (services->goToStart(); !services->atEnd(); services->next())
             if(serviceCode == services->getElement()->getCodigo())
                 actual = services->getElement();
         if(actual == nullptr){
@@ -163,13 +164,16 @@ public:
         return false;
     }
     string print(){
-        string result = "Area codigo " +  code + '\n' + description +  "\n   --------------------------------------------------------   ";
+        string result = "Area codigo ";
+        result += code;
+        result += "\nDescripcion: " + description +  "\n------------------------------------------------------------------";
         result += "\nServicios: \n";
         int counter = 0;
         for (services->goToStart(); !services->atEnd(); services->next()){
-            result += to_string(counter) + services->getElement()->print();
+            result += to_string(counter) + ". "+ services->getElement()->print();
             counter++;
         }
+        result += "------------------------------------------------------------------\n";
         return result; 
         
     }

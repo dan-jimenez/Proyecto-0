@@ -31,10 +31,14 @@ public:
     void setEndingTime(time_t endingTime){
         this->endingTime = endingTime;
     }
+    string getCode(){
+        return code;
+    }
     double getDuration(){
         duration<double> duracion = system_clock::from_time_t(endingTime) - system_clock::from_time_t(comingTime);
         return duracion.count();
     }
+    
 };
 
 #endif //TIQUETE_H
