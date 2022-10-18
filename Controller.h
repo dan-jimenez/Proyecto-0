@@ -30,7 +30,7 @@ public:
                 return areas->getElement()->generateClient(pref, serviceCode);
             }
         }
-        return false;
+        throw runtime_error("Area no existe...");
     }
     bool addService(char areaCode, string serviceCode, string nombre){
         noAreas();
