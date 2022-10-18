@@ -66,6 +66,8 @@ public:
             queues[i].print();
         }
     }
+
+    
 };
 
 #endif // LINKEDPRIORITYQUEUE_H

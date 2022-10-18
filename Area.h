@@ -183,6 +183,14 @@ public:
         
     }
 
+    void reorder(int inicialPos, int nextPos){
+        servicesVerification();
+        services->goToPos(inicialPos);
+        Service * current = services->remove();
+        services->goToPos(nextPos);
+        services->insert(current);
+    }
+
 };
 
 #endif // AREA_H

@@ -38,6 +38,9 @@ public:
         duration<double> duracion = system_clock::from_time_t(endingTime) - system_clock::from_time_t(comingTime);
         return duracion.count();
     }
+    string print(){
+        return code; 
+    }
     
 };
 

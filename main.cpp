@@ -77,7 +77,7 @@ int main()
             if (opcion == 1)
             {
                 cout << controller->print() << endl;
-                cout << "Por favor digite  el código de área: ";
+                cout << "Por favor digite  el código de area: ";
                 cin >> areaCode;
                 cout << "Por favor digite el código de servicio: ";
                 cin >> serviceCode;
@@ -93,7 +93,7 @@ int main()
             if (opcion == 2)
             {
                 cout << controller->print() << endl;
-                cout << "Por favor digite  el código de área: ";
+                cout << "Por favor digite  el código de area: ";
                 cin >> areaCode;
                 cout << "Por favor digite el código de servicio: ";
                 cin >> serviceCode;
@@ -211,15 +211,28 @@ int main()
                     }
                 }
 
-                if (opcion == 5)
-                { // no se hizo
-                    cout << "No implementada" << endl;
+                if (opcion == 5){
+                    int initialPos, nextPos;
+                    cout << "Por favor digite el codigo del Area donde se encuentra el servicio: ";
+                    cin >> areaCode;
+                    cout << controller->printArea(areaCode) << endl; 
+                    cout << "Ingresar el numero del servicio que desea cambiar de lugar: ";
+                    cin >> initialPos;
+                    cout << "Ingresar el numero de la posicion donde quiere poner el servicio: ";
+                    cin >> nextPos;
+                    try
+                    {
+                        controller->reorder(areaCode, initialPos, nextPos);
+                        cout << "Se reordeno correctamente. " << endl;
+                        cout << controller->printArea(areaCode) << endl; 
+                    }
+                    catch(const std::exception& e)
+                    {
+                        std::cerr << e.what() << '\n';
+                    }
                 }
                 if (opcion == 6)
-                {
-                    repetir = true;
                     break;
-                }
             }
             break;
         }
@@ -239,6 +252,7 @@ int main()
                 cin >> opcion;
                 if (opcion == 1)
                 {
+                    cout << controller->print()<< endl;
                     cout << "Por favor digite el codigo del area: ";
                     cin >> areaCode;
                     cout << "El tiempo promedio de atencion dentro de las areas es de: ";
@@ -254,7 +268,7 @@ int main()
 
                 if (opcion == 2)
                 {
-                    char areaCode;
+                    cout << controller->print()<< endl;
                     cout << "Digite el codigo del area: ";
                     cin >> areaCode;
                     cout << "La cantidad de tiquetes por area son: ";
@@ -270,7 +284,7 @@ int main()
 
                 if (opcion == 3)
                 {
-
+                    cout << controller->print()<< endl;
                     cout << "Por favor digite el codigo del area: ";
                     cin >> areaCode;
                     cout << "Digite el codigo de la ventanilla: ";
@@ -288,6 +302,7 @@ int main()
 
                 if (opcion == 4)
                 {
+                    cout << controller->print()<< endl;
                     cout << "Por favor digite el codigo de area: ";
                     cin >> areaCode;
                     cout << "Por favor digite el codigo de servicio: ";
@@ -315,10 +330,8 @@ int main()
                     }
                 }
                 if (opcion == 6)
-                {
-                    return repetir = true;
                     break;
-                }
+                
             }
             break;
         }

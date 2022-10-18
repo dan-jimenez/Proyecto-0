@@ -68,7 +68,7 @@ public:
         for (Node<E> *temp = front->next;
              temp != nullptr;
              temp = temp->next)
-            cout << temp->element << " ";
+            cout << temp->element->print() << " ";
         cout << "}" << endl;
     }
 };

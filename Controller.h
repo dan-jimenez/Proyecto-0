@@ -105,7 +105,7 @@ public:
             areas->getElement()->printQueues();
         }
     }
-    double getAverageWatingTime(char codigoArea){
+    int getAverageWatingTime(char codigoArea){
         noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == codigoArea)
@@ -149,6 +149,23 @@ public:
             counter++;
         }
         return result; 
+    }
+    string printArea(char areaCode){
+        noAreas();
+        for(areas->goToStart(); !areas->atEnd(); areas->next())
+            if(areas->getElement()->getCode() == areaCode)
+                return areas->getElement()->print();
+        throw runtime_error("No se encontro el area...");
+    }
+
+    bool reorder(char areaCode, int initialPos, int nextPos){
+        noAreas();
+        for(areas->goToStart(); !areas->atEnd(); areas->next())
+            if(areas->getElement()->getCode() == areaCode){
+                areas->getElement()->reorder(initialPos, nextPos);
+                return true;
+            }
+        throw runtime_error("No se encontro el area...");
     }
 };
 
