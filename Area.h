@@ -10,7 +10,10 @@
 #include "ArrayList.h"
 #include "ArrayQueue.h"
 #include "LinkedPriorityQueue.h"
+#include <stdexcept>
 
+
+using std::runtime_error;
 using std::to_string;
 
 class Area{
@@ -33,7 +36,16 @@ private:
             serviceWindows->append(current);
         }
     }
-
+    void servicesVerification(){
+        if(services->getSize() == 0){
+            throw runtime_error("No hay servicios disponible...");
+        }
+    }
+    void windowServicesVerification(){
+        if(serviceWindows->getSize() == 0){
+            throw runtime_error("No hay ventanas de servicio registradas...");
+        }
+    }
 
 public:
     Area(string description, char code, int windowsQuantity){
@@ -49,11 +61,12 @@ public:
     bool generateClient(bool pref, string serviceCode){ //este genera el code de la ficha apartir del servicio y el numero de clientes.
         string clientCode = code + to_string(ticketsGiven);
         Service * actual;
+        servicesVerification();
         for (int i = 0; i < services->getSize(); i++)
             if(serviceCode == services->getElement()->getCodigo())
                 actual = services->getElement();
         if(actual == nullptr){
-            return false;
+            throw runtime_error("El servicio no existe... ");
         }
         Ticket * client = new Ticket(clientCode, pref, actual);
         actual->count();
@@ -80,12 +93,13 @@ public:
             Area *a = areas->getElement();
             if (a->getCode() == code)
                 return true;
-        }
+        } 
         return false;
     }
     
     bool attend(string serviceWindowCode){
         ServiceWindow * current;
+        windowServicesVerification();
         for(serviceWindows->goToStart(); !serviceWindows->atEnd(); serviceWindows->next())
             if(serviceWindows->getElement()->getCode() == serviceWindowCode)
                 current = serviceWindows->getElement();
@@ -94,11 +108,18 @@ public:
             attentedTickets->append(current->getLastTicket());
             return true;
         }
+        throw runtime_error("La  ventana de servicio no existe...");
         return false;
     }
 
-    Service * removeService(string code){
-        return nullptr; //Falta implementacion
+    bool removeService(string code){
+        services->goToStart();
+        while (!services->atEnd()) {
+            Service * s = services->getElement();
+            if (s->getCodigo() == code)
+                return true;
+        }
+        return false;
     }
     string getDescription(){
         return description;
@@ -121,12 +142,13 @@ public:
         
     }
     int getTicketServiceWindow(string code){
+        windowServicesVerification();
         for (serviceWindows->goToStart(); !serviceWindows->atEnd(); serviceWindows->next()){
             if(serviceWindows->getElement()->getCode() == code){
                 return serviceWindows->getElement()->getTicketsQuantity();
             }
         }
-        return -1;
+        throw runtime_error("La ventana de servicio que se desea consultar no existe...");
     }
     void printQueues(){
         queue->print();
@@ -135,6 +157,7 @@ public:
         return ticketsGiven;
     }
     int getTicketsGiven(string serviceCode){
+        servicesVerification();
         for(services->goToStart(); !services->atEnd(); services->next())
             if(services->getElement()->getCodigo() == serviceCode)
                 return services->getElement()->getTicketsGiven();
@@ -145,6 +168,7 @@ public:
     }
 
     bool deleteService(string serviceCode){
+        servicesVerification();
         for(services->goToStart(); !services->atEnd(); services->next())
             if(services->getElement()->getCodigo() == serviceCode){
                 services->remove();

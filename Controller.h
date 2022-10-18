@@ -4,18 +4,27 @@
 #include "Area.h"
 #include "Service.h"
 #include <string.h>
+#include <stdexcept>
 
 using std::string;
+using std::runtime_error;
 
 class Controller{
 private:
     ArrayList<Area*> * areas;
+    
+    void noAreas(){
+        if(areas->getSize() == 0){
+            throw runtime_error("No hay areas disponibles... ");
+        }
+    }
 
 public:
     Controller(){
         areas = new ArrayList<Area*>();
     }
     bool generateTicket(char areaCode, bool pref, string serviceCode){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == areaCode){
                 return areas->getElement()->generateClient(pref, serviceCode);
@@ -24,6 +33,7 @@ public:
         return false;
     }
     bool addService(char areaCode, string serviceCode, string nombre){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == areaCode){
                 Service * current = new Service(nombre, serviceCode);
@@ -34,6 +44,7 @@ public:
         return false;
     }
     bool deleteService(char areaCode, string serviceCode){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == areaCode){
                 return areas->getElement()->removeService(serviceCode); 
@@ -52,6 +63,7 @@ public:
         return true; 
     }
     bool deleteArea(char code){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == code){
                 areas->remove();
@@ -61,6 +73,7 @@ public:
         return false;
     }
     bool areaExist(char code){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == code){
                 return true; 
@@ -69,6 +82,7 @@ public:
         return false;
     }
     bool attend(char areaCode, string serviceWindowCode){
+       noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == areaCode){
                 areas->getElement()->attend(serviceWindowCode);
@@ -79,40 +93,46 @@ public:
     }
 
     void printQueues(){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             cout << "Area "<< areas->getElement()->getCode() << ": " << endl;
             areas->getElement()->printQueues();
         }
     }
     double getAverageWatingTime(char codigoArea){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == codigoArea)
                 return areas->getElement()->getAverageWatingTime();
-        return -1;
+        throw runtime_error("No se han atendido tiquetes... por lo cual no hay tiempo de espera promedio...");
     }
     int getTicketQuantity(char codigoArea){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == codigoArea)
                 return areas->getElement()->getTicketsGiven();
-        return -1;
+        throw runtime_error("El area no ha dado ningun tiquete... ");
     }
     int getAttentedTicketsQuantity(char codeArea, string codigoVentanilla){
+        noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == codeArea)
                 return areas->getElement()->getTicketServiceWindow(codigoVentanilla);
-        return -1;
+        throw runtime_error("Esa ventanilla no ha atendido a ningun tiquete...");
     }
     int getQuantityTicketsGiven(char areaCode, string serviceCode){
+        noAreas();
         for (areas->goToStart(); !areas->atEnd(); areas->next())
             if(areas->getElement()->getCode() == areaCode)
                 return areas->getElement()->getTicketsGiven(serviceCode);
-        return -1;
+        throw runtime_error("No hay tiquetes dados...");
     }
     int getQuantityPrefTickets(){
+        noAreas();
         int ticketsPrefGiven = 0;
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             ticketsPrefGiven += areas->getElement()->getPrefTicketsGiven();
-        return ticketsPrefGiven;
+        throw runtime_error("No hay tiquetes preferenciales dados... ");
     }
 };
 
