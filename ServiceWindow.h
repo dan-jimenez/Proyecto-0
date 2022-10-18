@@ -27,6 +27,9 @@ public:
     string getCode(){
         return code;
     }
+    string print(){
+        return "Ventanilla codigo " + code + '\n';
+    }
 };
 
 #endif // SERVICEWINDOW_H

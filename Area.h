@@ -55,6 +55,7 @@ public:
         serviceWindows = new ArrayList<ServiceWindow*>();
         generateServiceWindows();
         services = new ArrayList<Service*>();
+        attentedTickets = new ArrayList<Ticket*>();
         queue = new LinkedPriorityQueue<Ticket*>(2);
     }
 
@@ -85,26 +86,24 @@ public:
     }
     
     bool attend(string serviceWindowCode){
-        ServiceWindow * current;
         windowServicesVerification();
         for(serviceWindows->goToStart(); !serviceWindows->atEnd(); serviceWindows->next())
-            if(serviceWindows->getElement()->getCode() == serviceWindowCode)
-                current = serviceWindows->getElement();
-        if(current != nullptr){
-            current->attend(queue->removeMin());
-            attentedTickets->append(current->getLastTicket());
-            return true;
-        }
+            if(serviceWindows->getElement()->getCode() == serviceWindowCode){
+                serviceWindows->getElement()->attend(queue->removeMin());
+                attentedTickets->append(serviceWindows->getElement()->getLastTicket());
+                return true;
+            }
         throw runtime_error("La  ventana de servicio no existe...");
-        return false;
     }
 
     bool removeService(string code){
         services->goToStart();
         while (!services->atEnd()) {
-            Service * s = services->getElement();
-            if (s->getCodigo() == code)
+            if (services->getElement()->getCodigo() == code){
+                services->remove();
                 return true;
+            }
+                
         }
         return false;
     }
@@ -123,7 +122,7 @@ public:
    double getAverageWatingTime(){
         double totalAverage = 0;
         for (attentedTickets->goToStart(); !attentedTickets->atEnd(); attentedTickets->next()){
-            totalAverage = attentedTickets->getElement()->getDuration();
+            totalAverage += attentedTickets->getElement()->getDuration();
         }
         return totalAverage/ticketsGiven;
         
@@ -169,9 +168,15 @@ public:
         result += "\nDescripcion: " + description +  "\n------------------------------------------------------------------";
         result += "\nServicios: \n";
         int counter = 0;
+        int counterWin = 0;
         for (services->goToStart(); !services->atEnd(); services->next()){
             result += to_string(counter) + ". "+ services->getElement()->print();
             counter++;
+        }
+        result += "------------------------------------------------------------------\nVentanillas: \n";
+        for (serviceWindows->goToStart(); !serviceWindows->atEnd(); serviceWindows->next()){
+            result += to_string(counterWin) +". " + serviceWindows->getElement()->print();
+            counterWin++;
         }
         result += "------------------------------------------------------------------\n";
         return result; 

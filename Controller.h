@@ -47,7 +47,7 @@ public:
         noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == areaCode){
-                return areas->getElement()->removeService(serviceCode); 
+                return areas->getElement()->removeService(serviceCode);
             }
         }
         return false;
@@ -95,7 +95,7 @@ public:
                 return true;
             }
         }
-        return false;
+        throw runtime_error("No se encontro el area deseada...");
     }
 
     void printQueues(){
