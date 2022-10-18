@@ -202,7 +202,6 @@ int main (){
                         controller->getQuantityPrefTickets();
                         break;
                     }
-
                     if (opcion==6)
                         return repetir=true;
 
