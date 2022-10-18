@@ -52,7 +52,8 @@ public:
         }
         return false;
     }
-    bool addArea(int windowsQuantity, char code, string description){
+    // -------------------------------------------------------------------------
+    bool addArea (string description, char code, int windowsQuantity){
         Area * current = new Area(description, code, windowsQuantity);
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == code){
@@ -60,8 +61,22 @@ public:
             }
         }
         areas->append(current);
-        return true; 
+        return true;
     }
+
+    bool areaExist(char code){
+        noAreas();
+        areas->goToStart();
+        while (!areas->atEnd()) {
+            Area *a = areas->getElement();
+            if (a->getCode() == code)
+                return true;
+        } 
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
     bool deleteArea(char code){
         noAreas();
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
@@ -71,15 +86,6 @@ public:
             }
         }
         throw runtime_error("No existe el area que se desea borrar... ");
-    }
-    bool areaExist(char code){
-        noAreas();
-        for(areas->goToStart(); !areas->atEnd(); areas->next()){
-            if(areas->getElement()->getCode() == code){
-                return true; 
-            }
-        }
-        return false;
     }
     bool attend(char areaCode, string serviceWindowCode){
        noAreas();
@@ -133,6 +139,16 @@ public:
         for(areas->goToStart(); !areas->atEnd(); areas->next())
             ticketsPrefGiven += areas->getElement()->getPrefTicketsGiven();
         throw runtime_error("No hay tiquetes preferenciales dados... ");
+    }
+
+    string print(){
+        string result = "Areas: \n";
+        int counter = 0;
+        for(areas->goToStart(); !areas->atEnd(); areas->next()){
+            result += to_string(counter) + areas->getElement()->print(); 
+            counter++;
+        }
+        return result; 
     }
 };
 

@@ -33,7 +33,10 @@ public:
     int getTicketsGiven(){
         return ticketsGiven;
     }
-
+    string print(){
+        string result = nombre + "   ----------------------------------------  "+ code + ". \n";
+        return result;
+    }
 
 };
 

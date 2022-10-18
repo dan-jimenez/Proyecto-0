@@ -27,7 +27,7 @@ int main (){
         cin >> wind;
         cout << "Por favor ingrese el código del area: ";
         cin >> codeA;
-        controller->addArea(wind, codeA, desc);
+        controller->addArea(desc, codeA, wind);
         cout << "Se ha agregado el area correctamente... " << endl;
         cout << "Desea agregar más? Si = 1, No = 0: ";
         cin >> fin;
@@ -83,7 +83,7 @@ int main (){
                     cout << "2. Si usted es un cliente preferencial" << endl;
                     cin >> opcion;
                     if (opcion == 1){
-
+                        
                     break;
                     }
                     if (opcion == 2){
@@ -124,7 +124,7 @@ int main (){
                             cout << "Por favor ingrese el codigo del Ã¡rea: ";
                             cin >> areaCode;
                             try{
-                                controller->addArea(wind, areaCode, desc);
+                                controller->addArea(desc, areaCode, wind);
                                 cout << "Se ha agregado el area correctamente... " << endl;
                             }catch(const std::exception& e){
                                 std::cerr << e.what() << '\n';

@@ -23,7 +23,6 @@ private:
     int windowsQuantity;
     ArrayList<ServiceWindow*> * serviceWindows;
     ArrayList<Service*> * services;
-    ArrayList <Area*>  * areas;
     LinkedPriorityQueue<Ticket*> *queue;
     ArrayList<Ticket*> * attentedTickets;
     int ticketsGiven; // tienen que ir desde el 0 al 99
@@ -82,19 +81,6 @@ public:
     }
     void addService(Service *service){
         services->append(service);
-    }
-    void addArea (Area *area){
-        areas->append(area);
-    }
-
-    bool areaExist(char code){
-        areas->goToStart();
-        while (!areas->atEnd()) {
-            Area *a = areas->getElement();
-            if (a->getCode() == code)
-                return true;
-        } 
-        return false;
     }
     
     bool attend(string serviceWindowCode){
@@ -176,7 +162,17 @@ public:
             }
         return false;
     }
-
+    string print(){
+        string result = "Area codigo " +  code + '\n' + description +  "\n   --------------------------------------------------------   ";
+        result += "\nServicios: \n";
+        int counter = 0;
+        for (services->goToStart(); !services->atEnd(); services->next()){
+            result += to_string(counter) + services->getElement()->print();
+            counter++;
+        }
+        return result; 
+        
+    }
 
 };
 
