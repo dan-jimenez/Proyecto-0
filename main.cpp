@@ -48,8 +48,6 @@ int main (){
                     cout << "1. Si es un cliente no-preferencial: " << endl;
                     cout << "2. Si usted es un cliente preferencial" << endl;
                     cin >> opcion;
-                    if (controller->areaExist(areaCode) == false)
-                        throw runtime_error ("No hay servicios disponibles en este momento: ");
                     if (opcion == 1){
 
                     break;
