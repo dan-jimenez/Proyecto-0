@@ -89,15 +89,24 @@ int main (){
                             cin >> wind;
                             cout << "Por favor ingrese el código del área: ";
                             cin >> areaCode;
-                            controller->addArea(wind, areaCode, desc);
-                             break;
+                            try{
+                                controller->addArea(wind, areaCode, desc);
+                                cout << "Se ha agregado el area correctamente... " << endl; 
+                            }catch(const std::exception& e){
+                                std::cerr << e.what() << '\n';
                             }
-
-
+                            break;
+                            }
                         if (opcion==2){
                             cout << "Por favor digite el código del área que desea eliminar";
                             cin>> areaCode;
-                            controller->deleteArea(areaCode);
+                            try{
+                                controller->deleteArea(areaCode);
+                            }catch(const std::exception& e){
+                                std::cerr << e.what() << '\n';
+                            }
+                            
+                            
                             break;
                         }
 

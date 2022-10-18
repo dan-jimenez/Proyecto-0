@@ -56,7 +56,7 @@ public:
         Area * current = new Area(description, code, windowsQuantity);
         for(areas->goToStart(); !areas->atEnd(); areas->next()){
             if(areas->getElement()->getCode() == code){
-                return false; 
+                throw runtime_error("El area ya existe... ");
             }
         }
         areas->append(current);
@@ -70,7 +70,7 @@ public:
                 return true;
             }
         }
-        return false;
+        throw runtime_error("No existe el area que se desea borrar... ");
     }
     bool areaExist(char code){
         noAreas();
