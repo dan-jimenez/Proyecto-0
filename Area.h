@@ -8,38 +8,50 @@
 #include "Ticket.h"
 #include <string.h>
 #include "ArrayList.h"
-#include "ArrayQueue.h"
 #include "LinkedPriorityQueue.h"
 #include <stdexcept>
 
+//La clase Area se encarga de crear areas con distintos atributos como: descripción, código, ventanillas, lista de servicios, lista de ventanillas y 2 colas una -
+// preferencial y otra normal. Desde está clase se pueden crear métodos para añadir areas, generar ventanillas, verificar si hay servicios y ventanillas disponibles -
+// crear areas nuevas, generar clientes, añadir, eliminar o reordenar servicios, atender y ver estado de las colas.
+//Autores: Danny Jimenez, Daniel Cruz y Emily Sánchez.
 
 using std::runtime_error;
 using std::to_string;
 
 class Area{
+    /**
+     * @brief Area
+     * Usada para manejar una seccion completa donde se contienen las ventanillas de servicio y las colas del programa.
+     *
+     * @author Danny Jimenez Sevilla
+     * @version 29/10/22
+     */
 private:
     string description;
-    char code;
+    string code;
     int windowsQuantity;
     ArrayList<ServiceWindow*> * serviceWindows;
-    ArrayList<Service*> * services;
     LinkedPriorityQueue<Ticket*> *queue;
     ArrayList<Ticket*> * attentedTickets;
     int ticketsGiven; // tienen que ir desde el 0 al 99
-    int prefTicketsGiven; 
+    int prefTicketsGiven;
+    void operator=(const Area &other) {}
 
     void generateServiceWindows(){
+        /**
+         * @brief Generate Service Window
+         * Inicializa todas las ventanas de servicio
+         * @author Danny Jimenez Sevilla
+         */
         for (int i = 0; i < windowsQuantity; i++){
+
             string windowCode = code + to_string(i);
             ServiceWindow * current = new ServiceWindow(windowCode);
             serviceWindows->append(current);
         }
     }
-    void servicesVerification(){
-        if(services->getSize() == 0){
-            throw runtime_error("No hay servicios disponible...");
-        }
-    }
+
     void windowServicesVerification(){
         if(serviceWindows->getSize() == 0){
             throw runtime_error("No hay ventanas de servicio registradas...");
@@ -47,30 +59,21 @@ private:
     }
 
 public:
-    Area(string description, char code, int windowsQuantity){
+    Area(string description, string code, int windowsQuantity){
         this->description = description;
         this->code = code;
         this->windowsQuantity = windowsQuantity;
         ticketsGiven = 0;
         serviceWindows = new ArrayList<ServiceWindow*>();
         generateServiceWindows();
-        services = new ArrayList<Service*>();
         attentedTickets = new ArrayList<Ticket*>();
         queue = new LinkedPriorityQueue<Ticket*>(2);
     }
 
-    bool generateClient(bool pref, string serviceCode){ //este genera el code de la ficha apartir del servicio y el numero de clientes.
+    bool generateClient(bool pref, Service * service){ //este genera el code de la ficha apartir del servicio y el numero de clientes.
         string clientCode = code + to_string(ticketsGiven);
-        Service * actual;
-        servicesVerification();
-        for (services->goToStart(); !services->atEnd(); services->next())
-            if(serviceCode == services->getElement()->getCodigo())
-                actual = services->getElement();
-        if(actual == nullptr){
-            throw runtime_error("El servicio no existe... ");
-        }
-        Ticket * client = new Ticket(clientCode, pref, actual);
-        actual->count();
+        Ticket * client = new Ticket(clientCode, pref, service);
+        service->count();
         if(pref){
             queue->insert(client, 0);
             prefTicketsGiven++;
@@ -79,12 +82,9 @@ public:
             queue->insert(client, 1);
         ticketsGiven++;
         return true;
-        
+
     }
-    void addService(Service *service){
-        services->append(service);
-    }
-    
+
     bool attend(string serviceWindowCode){
         windowServicesVerification();
         for(serviceWindows->goToStart(); !serviceWindows->atEnd(); serviceWindows->next())
@@ -96,21 +96,10 @@ public:
         throw runtime_error("La  ventana de servicio no existe...");
     }
 
-    bool removeService(string code){
-        services->goToStart();
-        while (!services->atEnd()) {
-            if (services->getElement()->getCodigo() == code){
-                services->remove();
-                return true;
-            }
-                
-        }
-        return false;
-    }
     string getDescription(){
         return description;
     }
-    char getCode(){
+    string getCode(){
         return code;
     }
     int getWindowsQuantity(){
@@ -125,7 +114,7 @@ public:
             totalAverage += attentedTickets->getElement()->getDuration();
         }
         return totalAverage/ticketsGiven;
-        
+
     }
     int getTicketServiceWindow(string code){
         windowServicesVerification();
@@ -136,59 +125,37 @@ public:
         }
         throw runtime_error("La ventana de servicio que se desea consultar no existe...");
     }
-    void printQueues(){
-        queue->print();
-    }
     int getTicketsGiven(){
         return ticketsGiven;
     }
-    int getTicketsGiven(string serviceCode){
-        servicesVerification();
-        for(services->goToStart(); !services->atEnd(); services->next())
-            if(services->getElement()->getCodigo() == serviceCode)
-                return services->getElement()->getTicketsGiven();
-        return -1;
-    }
+
     int getPrefTicketsGiven(){
         return prefTicketsGiven;
     }
-
-    bool deleteService(string serviceCode){
-        servicesVerification();
-        for(services->goToStart(); !services->atEnd(); services->next())
-            if(services->getElement()->getCodigo() == serviceCode){
-                services->remove();
-                return true;
-            }
-        return false;
+    void print(){
+        cout << "Area: " << description << ". Codigo: " << code << endl;
     }
-    string print(){
-        string result = "Area codigo ";
-        result += code;
-        result += "\nDescripcion: " + description +  "\n------------------------------------------------------------------";
-        result += "\nServicios: \n";
-        int counter = 0;
+    void printWindows(){
+        cout << "Area: " << description << ". Codigo: " << code << endl;
         int counterWin = 0;
-        for (services->goToStart(); !services->atEnd(); services->next()){
-            result += to_string(counter) + ". "+ services->getElement()->print();
-            counter++;
-        }
-        result += "------------------------------------------------------------------\nVentanillas: \n";
+        cout << "--------------------------------" << endl;
+        cout << "Ventanillas: " << endl;
         for (serviceWindows->goToStart(); !serviceWindows->atEnd(); serviceWindows->next()){
-            result += to_string(counterWin) +". " + serviceWindows->getElement()->print();
+            cout << counterWin << ". " ;
+            serviceWindows->getElement()->print();
             counterWin++;
         }
-        result += "------------------------------------------------------------------\n";
-        return result; 
-        
+        cout << "--------------------------------" << endl;
+
     }
 
-    void reorder(int inicialPos, int nextPos){
-        servicesVerification();
-        services->goToPos(inicialPos);
-        Service * current = services->remove();
-        services->goToPos(nextPos);
-        services->insert(current);
+    void printQueues(){
+        cout << "Area: " << description << ". Codigo: " << code << endl;
+        int counterWin = 0;
+        cout << "--------------------------------" << endl;
+        cout << "Colas: " << endl;
+        queue->print();
+        cout << "--------------------------------" << endl;
     }
 
 };

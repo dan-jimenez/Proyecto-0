@@ -7,7 +7,6 @@
 #include "LinkedQueue.h"
 #include "Queue.h"
 
-
 using std::runtime_error;
 using std::cout;
 using std::endl;
@@ -66,8 +65,6 @@ public:
             queues[i].print();
         }
     }
-
-    
 };
 
 #endif // LINKEDPRIORITYQUEUE_H

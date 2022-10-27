@@ -86,11 +86,5 @@ public:
         emptyWarning();
         return elements[(back+max-1)%max];
     }
-
 };
-
-
-
-
-
 #endif //ARRAYQUEUE_H
